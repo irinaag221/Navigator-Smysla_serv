@@ -1,0 +1,573 @@
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Навигатор смысла — Бизнес-консалтинг нового формата</title>
+<style>
+  :root{
+    --blue-900:#13344a;   /* глубокий петроль для hero */
+    --blue-800:#1d4660;
+    --blue-700:#27597a;
+    --blue-600:#326F94;   /* основной фирменный */
+    --blue-500:#426A83;   /* синий текст темы */
+    --blue-300:#A9B5C3;   /* сине-серый */
+    --tint:#D5E2EA;       /* голубой тинт */
+    --accent:#b89f7e;     /* тёплый акцент (из таупе DDD6CE) */
+    --accent-soft:#DDD6CE;
+    --ink:#1c3340;
+    --muted:#5d7280;
+    --paper:#ffffff;
+    --bg:#F9F8F6;         /* фирменный off-white */
+    --shadow:0 18px 50px -22px rgba(19,52,74,.42);
+    --radius:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  section{padding:84px 0}
+  .eyebrow{
+    display:inline-block;
+    font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--blue-600);
+    padding:7px 16px;border-radius:999px;
+    background:var(--tint);
+    margin-bottom:20px;
+  }
+  h2.title{
+    font-size:clamp(1.8rem,4vw,2.7rem);
+    font-weight:800;line-height:1.15;letter-spacing:-.02em;
+    margin-bottom:14px;
+  }
+  .lead{font-size:1.1rem;color:var(--muted);max-width:640px}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(50,111,148,.45), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(221,214,206,.20), transparent 55%),
+      linear-gradient(135deg,#0f2a3c 0%,#13344a 45%,#27597a 100%);
+    color:#fff;padding:140px 0 120px;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background-image:
+      radial-gradient(circle at center, rgba(255,255,255,.06) 1px, transparent 1.4px);
+    background-size:26px 26px;opacity:.5;pointer-events:none;
+  }
+  .hero .wrap{position:relative;z-index:2}
+  .hero .badge{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    color:#cfe2ee;background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);
+    padding:9px 18px;border-radius:999px;margin-bottom:30px;
+    backdrop-filter:blur(6px);
+  }
+  .compass{
+    width:14px;height:14px;border-radius:50%;
+    background:conic-gradient(var(--accent-soft),#fff,var(--accent-soft));
+    box-shadow:0 0 0 3px rgba(255,255,255,.12);
+  }
+  .hero h1{
+    font-size:clamp(2.6rem,7vw,5.2rem);
+    font-weight:900;line-height:1.02;letter-spacing:-.03em;
+    background:linear-gradient(120deg,#ffffff 0%,#cfe2ee 42%,#e3d9cb 100%);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent;
+    margin-bottom:18px;
+  }
+  .hero .sub{font-size:clamp(1.1rem,2.5vw,1.5rem);color:#d8e6ee;max-width:620px;margin-bottom:14px;font-weight:500}
+  .hero .micro{font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;color:#9bbacb}
+  .cta-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:40px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-weight:700;font-size:1rem;text-decoration:none;
+    padding:16px 30px;border-radius:14px;cursor:pointer;border:none;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .btn-primary{background:var(--accent);color:#2a2114;box-shadow:0 14px 30px -10px rgba(184,159,126,.55)}
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 22px 40px -12px rgba(184,159,126,.65)}
+  .btn-ghost{background:rgba(255,255,255,.07);color:#fff;border:1px solid rgba(255,255,255,.25)}
+  .btn-ghost:hover{background:rgba(255,255,255,.14);transform:translateY(-3px)}
+
+  /* ===== MISSION ===== */
+  .mission{background:var(--paper)}
+  .mission .quote{
+    position:relative;max-width:880px;margin:0 auto;text-align:center;
+    font-size:clamp(1.4rem,3.4vw,2.2rem);font-weight:700;line-height:1.35;letter-spacing:-.01em;
+  }
+  .mission .quote b{color:var(--blue-600)}
+  .mission .quote::before{
+    content:"“";display:block;font-size:5rem;line-height:.6;color:var(--blue-300);
+    margin-bottom:10px;font-family:Georgia,serif;
+  }
+
+  /* ===== WHY / CARDS ===== */
+  .why{background:var(--bg)}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:46px}
+  .card{
+    background:var(--paper);border-radius:var(--radius);padding:32px 26px;
+    border:1px solid #e7e9ea;position:relative;overflow:hidden;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease;
+  }
+  .card::before{
+    content:"";position:absolute;inset:0;opacity:0;transition:opacity .35s ease;
+    background:linear-gradient(160deg,rgba(50,111,148,.08),rgba(184,159,126,.06));
+  }
+  .card:hover{transform:translateY(-10px);box-shadow:var(--shadow);border-color:var(--blue-300)}
+  .card:hover::before{opacity:1}
+  .card .ic{
+    width:54px;height:54px;border-radius:16px;display:grid;place-items:center;
+    background:linear-gradient(140deg,var(--blue-700),var(--blue-600));
+    color:#fff;margin-bottom:20px;position:relative;z-index:1;
+    transition:transform .35s ease;
+  }
+  .card:hover .ic{transform:rotate(-6deg) scale(1.06)}
+  .card .ic svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:2}
+  .card h3{font-size:1.12rem;font-weight:800;margin-bottom:8px;position:relative;z-index:1}
+  .card p{font-size:.94rem;color:var(--muted);position:relative;z-index:1}
+
+  /* ===== PAIN / CASES ===== */
+  .pain{background:var(--blue-900);color:#fff}
+  .pain .eyebrow{background:rgba(255,255,255,.1);color:#cfe2ee}
+  .pain .title{color:#fff}
+  .pain .lead{color:#a9c2d1}
+  .pain-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:44px}
+  .pain-item{
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+    border-radius:16px;padding:24px 26px;display:flex;gap:16px;align-items:flex-start;
+    transition:background .3s ease,transform .3s ease;
+  }
+  .pain-item:hover{background:rgba(255,255,255,.09);transform:translateX(6px)}
+  .pain-item .dot{
+    flex:0 0 auto;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(184,159,126,.2);color:var(--accent-soft);font-weight:800;font-size:1.1rem;
+  }
+  .pain-item p{color:#dde9f0;font-size:1rem}
+  .pain-full{grid-column:1/-1}
+
+  /* ===== SERVICES ===== */
+  .services{background:var(--paper)}
+  .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:46px}
+  .svc{
+    border-radius:var(--radius);padding:34px 30px;background:var(--bg);
+    border:1px solid #e7e9ea;transition:transform .3s ease,box-shadow .3s ease;
+  }
+  .svc:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+  .svc .svc-head{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+  .svc .svc-ic{
+    width:46px;height:46px;border-radius:13px;display:grid;place-items:center;flex:0 0 auto;
+    background:linear-gradient(140deg,var(--blue-700),var(--blue-600));
+  }
+  .svc .svc-ic svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2}
+  .svc h3{font-size:1.25rem;font-weight:800}
+  .svc ul{list-style:none}
+  .svc li{
+    position:relative;padding:8px 0 8px 26px;font-size:.95rem;color:#2f4651;
+    border-bottom:1px dashed #e0e3e4;
+  }
+  .svc li:last-child{border-bottom:none}
+  .svc li::before{
+    content:"";position:absolute;left:4px;top:15px;width:9px;height:9px;border-radius:50%;
+    background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);
+  }
+
+  /* ===== PROCESS ===== */
+  .process{background:var(--bg)}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px}
+  .step{
+    background:var(--paper);border-radius:var(--radius);padding:30px 24px;position:relative;
+    border:1px solid #e7e9ea;transition:transform .3s ease,box-shadow .3s ease;
+  }
+  .step:hover{transform:translateY(-8px);box-shadow:var(--shadow)}
+  .step .num{
+    font-size:2.6rem;font-weight:900;line-height:1;letter-spacing:-.04em;
+    background:linear-gradient(120deg,var(--blue-600),var(--accent));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    margin-bottom:14px;
+  }
+  .step h4{font-size:1.05rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;color:var(--blue-700)}
+  .step p{font-size:.9rem;color:var(--muted)}
+  .process-note{
+    margin-top:36px;text-align:center;font-size:1.2rem;font-weight:700;color:var(--blue-700);
+  }
+
+  /* ===== TEAM ===== */
+  .team{background:var(--blue-900);color:#fff}
+  .team .eyebrow{background:rgba(255,255,255,.1);color:#cfe2ee}
+  .team .title{color:#fff}
+  .team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:46px}
+  .person{
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+    border-radius:var(--radius);padding:34px;transition:transform .3s ease,background .3s ease;
+  }
+  .person:hover{transform:translateY(-6px);background:rgba(255,255,255,.08)}
+  .person .ph{display:flex;align-items:center;gap:18px;margin-bottom:22px}
+  .person .avatar{
+    width:62px;height:62px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;
+    font-size:1.4rem;font-weight:800;color:#13344a;
+    background:linear-gradient(140deg,var(--tint),var(--accent-soft));
+  }
+  .person h3{font-size:1.4rem;font-weight:800}
+  .person .role{color:var(--accent-soft);font-weight:600;font-size:.9rem}
+  .person ul{list-style:none}
+  .person li{
+    position:relative;padding:8px 0 8px 24px;font-size:.93rem;color:#d4e2ea;
+    border-bottom:1px solid rgba(255,255,255,.07);
+  }
+  .person li:last-child{border-bottom:none}
+  .person li::before{content:"›";position:absolute;left:4px;color:var(--blue-300);font-weight:800}
+
+  /* ===== TOOLS TAGS ===== */
+  .tools{background:var(--paper);text-align:center}
+  .tags{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:42px}
+  .tag{
+    font-size:.95rem;font-weight:700;color:var(--blue-700);
+    padding:13px 24px;border-radius:999px;background:var(--tint);
+    border:1px solid transparent;cursor:default;
+    transition:transform .25s ease,background .25s ease,color .25s ease,box-shadow .25s ease;
+  }
+  .tag:hover{
+    transform:translateY(-5px) scale(1.04);
+    background:linear-gradient(140deg,var(--blue-700),var(--blue-600));
+    color:#fff;box-shadow:0 12px 24px -10px rgba(39,89,122,.55);
+  }
+
+  /* ===== TRAINING ===== */
+  .training{background:var(--bg)}
+  .train-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:42px}
+  .train{
+    background:var(--paper);border:1px solid #e7e9ea;border-radius:16px;padding:26px 28px;
+    display:flex;gap:16px;align-items:center;transition:transform .3s ease,box-shadow .3s ease;
+  }
+  .train:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+  .train .tic{
+    width:46px;height:46px;border-radius:13px;flex:0 0 auto;display:grid;place-items:center;
+    background:var(--accent-soft);color:var(--accent);
+  }
+  .train .tic svg{width:24px;height:24px;stroke:#7a6a52;fill:none;stroke-width:2}
+  .train p{font-weight:600;color:#2b414c}
+
+  /* ===== FINAL CTA ===== */
+  .final{
+    background:
+      radial-gradient(900px 500px at 20% -20%, rgba(50,111,148,.5), transparent 55%),
+      linear-gradient(135deg,#0f2a3c,#27597a);
+    color:#fff;text-align:center;
+  }
+  .final h2{
+    font-size:clamp(1.8rem,5vw,3.3rem);font-weight:900;letter-spacing:-.02em;line-height:1.1;
+    background:linear-gradient(120deg,#fff,#cfe2ee,#e3d9cb);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    margin-bottom:18px;
+  }
+  .final p{color:#d2e3ec;font-size:1.15rem;margin-bottom:36px}
+  .final .free{
+    display:inline-block;margin-top:28px;font-size:.9rem;color:#9bbacb;
+    letter-spacing:.1em;text-transform:uppercase;
+  }
+
+  /* ===== FOOTER ===== */
+  footer{background:#0c2434;color:#9bb3c1;padding:50px 0}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+  .foot .brand{font-size:1.4rem;font-weight:900;color:#fff;letter-spacing:.02em}
+  .foot a{color:#cfe2ee;text-decoration:none;font-weight:600}
+  .foot a:hover{color:#fff}
+  .foot .links{display:flex;gap:26px;flex-wrap:wrap;align-items:center}
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:980px){
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .svc-grid{grid-template-columns:1fr}
+    .steps{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:720px){
+    section{padding:60px 0}
+    .pain-grid,.team-grid,.train-grid{grid-template-columns:1fr}
+    .pain-full{grid-column:auto}
+    .hero{padding:110px 0 90px}
+    .cta-row .btn{flex:1 1 100%;justify-content:center}
+  }
+  @media (max-width:480px){
+    .cards{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr}
+    .wrap{padding:0 18px}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="badge"><span class="compass"></span>Бизнес-консалтинг нового формата</span>
+    <h1>Навигатор смысла</h1>
+    <p class="sub">Бизнес, который движется осознанно.</p>
+    <p class="micro">Управление · Финансы · Люди · Данные</p>
+    <div class="cta-row">
+      <a href="#contact" class="btn btn-primary">Бесплатная диагностика · 60 минут →</a>
+      <a href="#services" class="btn btn-ghost">Наши услуги</a>
+    </div>
+  </div>
+</header>
+
+<!-- MISSION -->
+<section class="mission">
+  <div class="wrap">
+    <p class="quote">Наша миссия — не просто объяснять, <b>как надо</b>, а строить вместе с вами бизнес, который <b>работает</b>.</p>
+  </div>
+</section>
+
+<!-- WHY / SKILL CARDS -->
+<section class="why" id="why">
+  <div class="wrap">
+    <span class="eyebrow">Почему с нами</span>
+    <h2 class="title">Почему с нами, а не с другими?</h2>
+    <p class="lead">Четыре опоры, на которых держится управляемый и предсказуемый бизнес.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-4 3 3 4-6"/></svg></div>
+        <h3>Выстроенное управление</h3>
+        <p>Единая система управления вместо ручного контроля и «тушения пожаров».</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <h3>Финансовая ясность</h3>
+        <p>Прозрачные цифры в реальном времени — вы видите результат, а не узнаёте о нём позже.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 4 12.7V18H8v-3.3A7 7 0 0 1 12 2z"/><path d="M9 21h6"/></svg></div>
+        <h3>Трансформация мышления</h3>
+        <p>Меняем образ мышления команды — от исполнителей к ответственным за результат.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.3 1a7 7 0 0 0-1.7-1l-.4-2.6H9.5L9 4a7 7 0 0 0-1.7 1l-2.3-1-2 3.4L5 9a7 7 0 0 0 0 2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 1.7 1l.4 2.6h4l.4-2.6a7 7 0 0 0 1.7-1l2.3 1 2-3.4-2-1.5z"/></svg></div>
+        <h3>Процессы и автоматизация</h3>
+        <p>Понятные процессы и автоматизация, которые экономят время и убирают хаос.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN / CASES -->
+<section class="pain" id="pain">
+  <div class="wrap">
+    <span class="eyebrow">Узнаёте себя?</span>
+    <h2 class="title">Знакомые ситуации</h2>
+    <p class="lead">Если хотя бы один пункт про вас — это сигнал, что системе нужна настройка.</p>
+    <div class="pain-grid">
+      <div class="pain-item"><div class="dot">!</div><p>Энергия уходит на контроль, а не на развитие.</p></div>
+      <div class="pain-item"><div class="dot">!</div><p>Финансовый результат узнаёте от бухгалтера с опозданием на месяц.</p></div>
+      <div class="pain-item"><div class="dot">!</div><p>Устали бороться с кассовыми разрывами и нехваткой денег.</p></div>
+      <div class="pain-item"><div class="dot">!</div><p>Не понимаете, с каким результатом закончите год — нет системы бюджетирования.</p></div>
+      <div class="pain-item pain-full"><div class="dot">!</div><p>Системы есть, но единой картины бизнеса нет.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="wrap">
+    <span class="eyebrow">Наши услуги</span>
+    <h2 class="title">Три направления работы</h2>
+    <p class="lead">Полное сопровождение: от диагностики до передачи готовых инструментов вашей команде.</p>
+    <div class="svc-grid">
+      <div class="svc">
+        <div class="svc-head">
+          <div class="svc-ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><rect x="7" y="11" width="3" height="7"/><rect x="12" y="7" width="3" height="11"/><rect x="17" y="13" width="3" height="5"/></svg></div>
+          <h3>Финансы</h3>
+        </div>
+        <ul>
+          <li>Диагностика</li>
+          <li>Построение управленческого учёта</li>
+          <li>Управленческий аудит</li>
+          <li>Антикризисное управление</li>
+          <li>Оценка бизнеса и подготовка к продаже / инвестициям</li>
+          <li>Бюджетирование</li>
+          <li>Юнит-экономика</li>
+          <li>Привлечение финансирования</li>
+        </ul>
+      </div>
+      <div class="svc">
+        <div class="svc-head">
+          <div class="svc-ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2"/><path d="M16 20c0-2 1-3 3-3s3 1 3 3"/></svg></div>
+          <h3>Команда и люди</h3>
+        </div>
+        <ul>
+          <li>Аудит персонала</li>
+          <li>Расчёт производительности по людям и отделам</li>
+          <li>HR-аналитика и HR-метрики</li>
+          <li>Мотивация, KPI и бонусные схемы</li>
+          <li>Автоматизация процессов и решения на базе ИИ</li>
+          <li>Работа с демотивацией и выгоранием управленцев</li>
+        </ul>
+      </div>
+      <div class="svc">
+        <div class="svc-head">
+          <div class="svc-ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/></svg></div>
+          <h3>Аналитика и отчётность</h3>
+        </div>
+        <ul>
+          <li>Стратегическая панель собственника — весь бизнес в одном отчёте</li>
+          <li>Стратегические и оперативные панели управления по функциям</li>
+          <li>Аналитика по продуктовой линейке и бизнес-направлениям</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="wrap">
+    <span class="eyebrow">От запроса до результата</span>
+    <h2 class="title">Как мы работаем</h2>
+    <p class="lead">Прозрачный путь с понятными точками контроля на каждом этапе.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <h4>Диагностика</h4>
+        <p>Разбираем ситуацию, выявляем задачу и честно говорим о возможностях.</p>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <h4>Предложение</h4>
+        <p>КП с объёмом, сроками и результатами в рублях.</p>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <h4>Работа</h4>
+        <p>Еженедельные точки контроля и прозрачная коммуникация.</p>
+      </div>
+      <div class="step">
+        <div class="num">04</div>
+        <h4>Передача</h4>
+        <p>Инструменты остаются у вас. Обучаем команду.</p>
+      </div>
+    </div>
+    <p class="process-note">Работаем не за вас, а для вас.</p>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="wrap">
+    <span class="eyebrow">Люди за компасом</span>
+    <h2 class="title">Кто ведёт ваш бизнес</h2>
+    <div class="team-grid">
+      <div class="person">
+        <div class="ph">
+          <div class="avatar">ЕМ</div>
+          <div>
+            <h3>Елена Масина</h3>
+            <div class="role">20+ лет в управлении бизнесом и финансами</div>
+          </div>
+        </div>
+        <ul>
+          <li>Генеральный директор финансовой организации; опыт в России, СНГ, Восточной Европе, на Ближнем Востоке и в Северной Африке</li>
+          <li>Финансовый директор крупнейшего автомобильного концерна — полная ответственность за P&amp;L, IT, логистику и запчасти</li>
+          <li>Построение стратегии и антикризисное управление</li>
+          <li>Управление изменениями и перестройка команд в цифровой трансформации</li>
+          <li>Работа в условиях геополитической турбулентности и кризисов</li>
+        </ul>
+      </div>
+      <div class="person">
+        <div class="ph">
+          <div class="avatar">ИА</div>
+          <div>
+            <h3>Ирина Агеева</h3>
+            <div class="role">20+ лет в управлении финансами</div>
+          </div>
+        </div>
+        <ul>
+          <li>10+ индустрий: фарма, ритейл, строительство, IT и др.</li>
+          <li>Управление IT, HR, бизнес-анализом, юридическим сопровождением, аудитом</li>
+          <li>Автоматизация: ERP, 1С, BI, MES, WMS, CRM, документооборот</li>
+          <li>Проекты оптимизации бизнес-процессов и систем мотивации</li>
+          <li>Построение финансового управления «с нуля», подготовка к продаже, M&amp;A</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS TAGS -->
+<section class="tools" id="tools">
+  <div class="wrap">
+    <span class="eyebrow">Инструменты и автоматизация</span>
+    <h2 class="title">С какими системами работаем</h2>
+    <div class="tags">
+      <span class="tag">ERP</span>
+      <span class="tag">1С</span>
+      <span class="tag">BI</span>
+      <span class="tag">MES</span>
+      <span class="tag">WMS</span>
+      <span class="tag">CRM</span>
+      <span class="tag">Документооборот</span>
+      <span class="tag">Решения на базе ИИ</span>
+      <span class="tag">Юнит-экономика</span>
+      <span class="tag">Бюджетирование</span>
+      <span class="tag">KPI &amp; мотивация</span>
+      <span class="tag">HR-аналитика</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRAINING -->
+<section class="training" id="training">
+  <div class="wrap">
+    <span class="eyebrow">Обучение</span>
+    <h2 class="title">Тренинги и вебинары</h2>
+    <p class="lead">Управление компанией на основе данных — для собственников и руководителей.</p>
+    <div class="train-grid">
+      <div class="train">
+        <div class="tic"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M21 7v6M7 9v5c0 1.7 2.2 3 5 3s5-1.3 5-3V9"/></svg></div>
+        <p>Финансы для нефинансовых менеджеров</p>
+      </div>
+      <div class="train">
+        <div class="tic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 16v-1c0-1.5 2-1.8 2-3.5a2 2 0 0 0-4 0M12 19h.01"/></svg></div>
+        <p>Вопросы, на которые должен знать ответ каждый собственник</p>
+      </div>
+      <div class="train">
+        <div class="tic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M16 4l5 2-5 2"/></svg></div>
+        <p>Финансы для HR — говорим на языке бизнеса</p>
+      </div>
+      <div class="train">
+        <div class="tic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l3-3 3 2 4-5"/></svg></div>
+        <p>Управление людьми в цифрах — HR глазами собственника</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" id="contact">
+  <div class="wrap">
+    <h2>Мы не смотрим назад —<br>мы смотрим вперёд</h2>
+    <p>Начнём разговор с того, что важно именно для вашего бизнеса.</p>
+    <a href="https://t.me/Navigator_Smysla" class="btn btn-primary">Начать разговор →</a>
+    <div class="free">Бесплатная диагностика · 60 минут</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot">
+    <div class="brand">Навигатор смысла</div>
+    <div class="links">
+      <a href="https://navsm.pro" target="_blank" rel="noopener">NAVSM.PRO</a>
+      <a href="https://t.me/Navigator_Smysla" target="_blank" rel="noopener">Telegram →</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
